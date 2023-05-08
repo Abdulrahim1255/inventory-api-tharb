@@ -14,10 +14,10 @@ class ProductController{
             res.status(400).send("Data Missing")
         }else{
             //console.log(_.difference(['223','23','3'],['223','23','s']))
-            Product.findOne({name})
+            Product.find({companyName},{name})
             .then(response=>{
                 if(response){
-                    Product.updateOne({name},{$push:{type,unit,companyName}})
+                    Product.updateOne({name},{companyName},{$push:{type,unit,companyName}})
                     .then(updateResponse=>{
                         if(updateResponse.modifiedCount>0){
                             res.status(200).send({msg:"success",result:'Updated'})
@@ -26,7 +26,8 @@ class ProductController{
                         }
                         
                     })
-                }else{
+                }
+                else{
                     const newProduct = new Product({
                         name,
                         companyName,
